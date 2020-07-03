@@ -1,0 +1,21 @@
+To be able to send CAN frames therough RPI, a CAN shield can be used "https://store.arduino.cc/usa/can-bus-shield-v2".
+The Raspberry PI drives the arduino CAN shield using SPI and through that it is able to send CAN frames.
+
+To configure the Raspberry PI with arduino CAN shield follow these steps:
+
+1) Enable the SPI by typing "sudo raspi-config" and enable the SPI from advanced options.
+
+2) Update the Raspberry PI :
+    1) sudo apt-get update
+    2) sudo apt-get upgrade
+
+3) Edit /boot/config.txt and add the following line:
+    dtparam=spi=on
+    dtoverlay=mcp2515-can0,oscillator=16000000,interrupt=25
+    dtoverlay=spi-bcm2835
+
+5) Install the can-utils:
+    sudo apt-get install can-utils
+
+6) Configure and run the can0 interface:
+    sudo ip link set can0 up type can bitrate 500000
